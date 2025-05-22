@@ -3,6 +3,16 @@
 
 char *USERS = "./data/users.txt";
 
+//user struct
+struct User {
+    int id;
+    char name[50];
+    char password[50];
+};
+
+int getNextID();
+void mainMenu(struct User u);
+
 void loginMenu(char a[50], char pass[50])
 {
     struct termios oflags, nflags;
