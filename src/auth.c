@@ -8,15 +8,6 @@
 
 char *USERS = "./data/users.txt";
 
-//user struct
-// struct User {
-//     int id;
-//     char name[50];
-//     char password[50];
-// };
-
-// int getNextID();
-
 void mainMenu(struct User u);
 
 // loginMenu() collects user credentials with hidden password input
@@ -81,4 +72,24 @@ const char *getPassword(struct User u) {
 
   fclose(fp);
   return "no user found"; 
+}
+
+//isUsernameUnique() check if  the username already exists
+int isUsernameUnique(char username[]){
+    FILE *fp;
+    struct User userChecker;
+
+    if ((fp = fopen("./data/users.txt", "r")) == NULL) {
+        printf("Error! opening file");
+        exit(1);
+    }
+
+    while (fscanf(fp, "%d %s %s", &userChecker.id, userChecker.name, userChecker.password) != EOF) {
+        if (strcmp(userChecker.name, username) == 0) {
+        fclose(fp);
+        return 0; 
+    }
+  }
+  fclose(fp);
+  return 1; 
 }
