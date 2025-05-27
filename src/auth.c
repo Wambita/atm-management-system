@@ -163,8 +163,37 @@ void registerMenu(char a[MAX_USERNAME_SIZE], char pass[MAX_PASSWORD_SIZE]){
 
 // handleFailedLogin() gives users retry or exit options after failed login
 void handleFailedLogin(struct User *u){
+int option;
+  do {
+    printf("\n\t\tEnter 0 to try again, 1 to exit! \n\n");
+    scanf("%d", &option);
 
+    if (option == 0) {
+      initMenu(u); // Retry login
+      break;
+    } else if (option == 1) {
+      exit(1); // Exit program
+      break;
+    } else {
+      printf("Insert a valid operation!\n");
+    }
+  } while (option < 0 || option > 1);
 }
 
 // handleFailedRegistration() gives retry or exit option on registration failure
-void handleFailedRegistration(char a[MAX_USERNAME_SIZE], char pass[MAX_PASSWORD_SIZE]) {}
+void handleFailedRegistration(char a[MAX_USERNAME_SIZE], char pass[MAX_PASSWORD_SIZE]) {
+    int option;
+  do {
+    printf("\n\t\tEnter 0 to try again, 1 to exit!\n\n");
+    scanf("%d", &option);
+    if (option == 0) {
+      registerMenu(a, pass); // Retry registration
+      break;
+    } else if (option == 1) {
+      exit(1); // Exit program
+      break;
+    } else {
+      printf("\t\tInsert a valid operation!\n");
+    }
+  } while (option < 0 || option > 1);
+}
