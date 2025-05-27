@@ -93,3 +93,11 @@ int isUsernameUnique(char username[]){
   fclose(fp);
   return 1; 
 }
+
+// registerMenu() handles new user registration, enforces unique usernames, and saves data
+void registerMenu(char a[MAX_USERNAME_SIZE], char pass[MAX_PASSWORD_SIZE]){
+
+}
+
+// handleFailedLogin() gives users retry or exit options after failed login
+void handleFailedLogin(struct User *u){}
