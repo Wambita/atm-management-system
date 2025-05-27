@@ -64,25 +64,21 @@ void initMenu(struct User *u)
     printf("\n\t\t[3]- exit\n");
     while (!r)
     {
-        scanf("%d", &option);
+        scanf("\n\t\t%d", &option);
         switch (option)
         {
         case 1:
             loginMenu(u->name, u->password);
-            if (strcmp(u->password, getPassword(*u)) == 0)
-            {
-                printf("\n\nPassword Match!");
-            }
-            else
-            {
-                printf("\nWrong password!! or User Name\n");
-                exit(1);
+            if (strcmp(u->password, getPassword(*u)) == 0){
+            }else{
+                printf("\n\t\tWrong password!! or User Name\n");
+                handleFailedLogin(u);
             }
             r = 1;
             break;
         case 2:
-            // student TODO : add your **Registration** function
-            // here
+            //  **Registration** function
+            registerMenu(u->name,u->password);
             r = 1;
             break;
         case 3:
