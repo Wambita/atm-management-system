@@ -1,19 +1,25 @@
 #include <termios.h>
 #include "header.h"
 
+//constants
+#define MAX_USERNAME_SIZE 50
+#define MAX_PASSWORD_SIZE 50
+#define MAX_ID_SIZE 5
+
 char *USERS = "./data/users.txt";
 
 //user struct
-struct User {
-    int id;
-    char name[50];
-    char password[50];
-};
+// struct User {
+//     int id;
+//     char name[50];
+//     char password[50];
+// };
 
-int getNextID();
+// int getNextID();
+
 void mainMenu(struct User u);
 
-void loginMenu(char a[50], char pass[50])
+void loginMenu(char a[MAX_USERNAME_SIZE], char pass[MAX_PASSWORD_SIZE])
 {
     struct termios oflags, nflags;
 
@@ -38,6 +44,15 @@ void loginMenu(char a[50], char pass[50])
     // restore terminal
     if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)
     {
+        perror("tcsetattr");
+        return exit(1);
+    }
+
+    printf("\n\t\tEnter the password: ");
+    scanf("%s", pass);
+
+    //restore terminal
+    if (tcsetattr(fileno(stdin), TCSANOW, &nflags) != 0){
         perror("tcsetattr");
         return exit(1);
     }
