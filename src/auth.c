@@ -19,6 +19,7 @@ char *USERS = "./data/users.txt";
 
 void mainMenu(struct User u);
 
+// loginMenu() collects user credentials with hidden password input
 void loginMenu(char a[MAX_USERNAME_SIZE], char pass[MAX_PASSWORD_SIZE])
 {
     struct termios oflags, nflags;
@@ -58,27 +59,26 @@ void loginMenu(char a[MAX_USERNAME_SIZE], char pass[MAX_PASSWORD_SIZE])
     }
 };
 
-const char *getPassword(struct User u)
-{
-    FILE *fp;
-    struct User userChecker;
+// getPassword() reads stored password for a user from file
+const char *getPassword(struct User u) {
+  FILE *fp;
+  struct User userChecker;
+  char id[MAX_ID_SIZE];
 
-    if ((fp = fopen("./data/users.txt", "r")) == NULL)
-    {
-        printf("Error! opening file");
-        exit(1);
+  if ((fp = fopen("./data/users.txt", "r")) == NULL) {
+    printf("Error! opening file");
+    exit(1);
+  }
+
+  while (fscanf(fp, "%s %s %s", id, userChecker.name, userChecker.password) != EOF) {
+    if (strcmp(userChecker.name, u.name) == 0) {
+      fclose(fp);
+      u.id = atoi(id); 
+      char *buff = userChecker.password;
+      return buff;
     }
+  }
 
-    while (fscanf(fp, "%s %s", userChecker.name, userChecker.password) != EOF)
-    {
-        if (strcmp(userChecker.name, u.name) == 0)
-        {
-            fclose(fp);
-            char *buff = userChecker.password;
-            return buff;
-        }
-    }
-
-    fclose(fp);
-    return "no user found";
+  fclose(fp);
+  return "no user found"; 
 }
