@@ -1,8 +1,16 @@
 #include "header.h"
 
+//constants
+#define MAX_RECORDS 100
+#define MAX_USERNAME_SIZE 50
+#define MAX_PASSWORD_SIZE 50
+#define MAX_ID_SIZE 5
+#define MAX_COUNTRY_SIZE 100
+#define MAX_TRANSACTION_TYPE_SIZE 10
+
 const char *RECORDS = "./data/records.txt";
 
-int getAccountFromFile(FILE *ptr, char name[50], struct Record *r)
+int getAccountFromFile(FILE *ptr, char name[MAX_USERNAME_SIZE], struct Record *r)
 {
     return fscanf(ptr, "%d %d %s %d %d/%d/%d %s %d %lf %s",
                   &r->id,
