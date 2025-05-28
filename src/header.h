@@ -19,10 +19,10 @@ struct Record
 {
     int id;
     int userId;
-    char name[100];
-    char country[100];
+    char name[MAX_USERNAME_SIZE];
+    char country[MAX_COUNTRY_SIZE];
     int phone;
-    char accountType[10];
+    char accountType[MAX_TRANSACTION_TYPE_SIZE];
     int accountNbr;
     double amount;
     struct Date deposit;
