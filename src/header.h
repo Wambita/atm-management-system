@@ -50,3 +50,5 @@ void mainMenu(struct User u);
 void checkAllAccounts(struct User u);
 void checkAccountDetails(struct User u);
 void removeAccount(struct User u);
+void makeTransaction(struct User u);
+void TransferOwnership(struct User u);
