@@ -48,3 +48,5 @@ void handleFailedRegistration(char a[MAX_USERNAME_SIZE], char pass[MAX_PASSWORD_
 void createNewAcc(struct User u);
 void mainMenu(struct User u);
 void checkAllAccounts(struct User u);
+void checkAccountDetails(struct User u);
+void removeAccount(struct User u);
