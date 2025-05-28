@@ -32,14 +32,17 @@ struct Record
 struct User
 {
     int id;
-    char name[50];
-    char password[50];
+    char name[MAX_USERNAME_SIZE];
+    char password[MAX_PASSWORD_SIZE];
 };
 
 // authentication functions
-void loginMenu(char a[50], char pass[50]);
-void registerMenu(char a[50], char pass[50]);
+void initMenu(struct User *u);
+void loginMenu(char a[MAX_USERNAME_SIZE], char pass[MAX_PASSWORD_SIZE]);
+void registerMenu(char a[MAX_USERNAME_SIZE], char pass[MAX_PASSWORD_SIZE]);
 const char *getPassword(struct User u);
+void handleFailedLogin(struct User *u);
+void handleFailedRegistration(char a[MAX_USERNAME_SIZE], char pass[MAX_PASSWORD_SIZE]);
 
 // system function
 void createNewAcc(struct User u);
