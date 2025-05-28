@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+//constants 
+#define MAX_USERNAME_SIZE 50
+#define MAX_PASSWORD_SIZE 50
+#define MAX_COUNTRY_SIZE 100
+#define MAX_TRANSACTION_TYPE_SIZE 10
+
 struct Date
 {
     int month, day, year;
