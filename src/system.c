@@ -29,9 +29,9 @@ int getAccountFromFile(FILE *ptr, char name[MAX_USERNAME_SIZE], struct Record *r
 void saveAccountToFile(FILE *ptr, struct User u, struct Record r)
 {
     fprintf(ptr, "%d %d %s %d %d/%d/%d %s %d %.2lf %s\n\n",
-            &r->id,
-	    &u->id
-	    &u->name,
+                r.id,
+	            u.id,
+	         u.name,
             r.accountNbr,
             r.deposit.month,
             r.deposit.day,
@@ -40,6 +40,13 @@ void saveAccountToFile(FILE *ptr, struct User u, struct Record r)
             r.phone,
             r.amount,
             r.accountType);
+}
+
+//update user account function
+void updateUserAccountInFile(FILE *ptr, struct Record r) {
+  fprintf(ptr, "%d %d %s %d %d/%d/%d %s %d %.2lf %s\n\n", r.id, r.userId,
+          r.name, r.accountNbr, r.deposit.month, r.deposit.day, r.deposit.year,
+          r.country, r.phone, r.amount, r.accountType);
 }
 
 void stayOrReturn(int notGood, void f(struct User u), struct User u)
