@@ -93,7 +93,7 @@ void success(struct User u)
     int option;
     printf("\n✔ Success!\n\n");
 invalid:
-    printf("Enter 1 to go to the main menu and 0 to exit!\n");
+    printf("\n\t\tEnter 1 to go to the main menu and 0 to exit!\n");
     scanf("%d", &option);
     system("clear");
     if (option == 1)
@@ -106,8 +106,7 @@ invalid:
     }
     else
     {
-        printf("Insert a valid operation!\n");
-        goto invalid;
+        printf("\n\t\tInsert a valid operation!\n");
     }
 }
 
