@@ -91,8 +91,7 @@ void stayOrReturn(int notGood, void f(struct User u), struct User u)
 void success(struct User u)
 {
     int option;
-    printf("\n✔ Success!\n\n");
-invalid:
+    while(1) {
     printf("\n\t\tEnter 1 to go to the main menu and 0 to exit!\n");
     scanf("%d", &option);
     system("clear");
@@ -107,6 +106,7 @@ invalid:
     else
     {
         printf("\n\t\tInsert a valid operation!\n");
+    }
     }
 }
 
