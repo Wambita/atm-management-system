@@ -223,14 +223,21 @@ void checkAllAccounts(struct User u)
     stayOrReturn(1, checkAllAccounts, u);
     return;
   }
-  
-    char userName[100];
+
+    char userName[MAX_USERNAME_SIZE];
+    int accountsFound = 0;
     struct Record r;
 
     FILE *pf = fopen(RECORDS, "r");
+    if (pf == NULL) {
+    perror("\n\t\tFailed to open file");
+    return;
+    }
 
     system("clear");
     printf("\t\t====== All accounts from user, %s =====\n\n", u.name);
+
+
     while (getAccountFromFile(pf, userName, &r))
     {
         if (strcmp(userName, u.name) == 0)
