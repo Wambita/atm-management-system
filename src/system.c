@@ -97,6 +97,26 @@ int getUserId(const char *username) {
   return -1;
 } 
 
+
+//does  user have account function
+int doesUserHaveAccounts(struct User u) {
+  struct Record r;
+  FILE *pf = fopen(RECORDS, "r");
+  if (pf == NULL) {
+    perror("\n\t\tFailed to open file");
+    return 0;
+  }
+  char userName[MAX_USERNAME_SIZE];
+  while (getAccountFromFile(pf, userName, &r)) {
+    if (strcmp(userName, u.name) == 0) {
+      fclose(pf);
+      return 1;
+    }
+  }
+  fclose(pf);
+  return 0;
+}
+//success
 void success(struct User u)
 {
     int option;
