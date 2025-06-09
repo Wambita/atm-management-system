@@ -217,6 +217,13 @@ do{
 //check accounts
 void checkAllAccounts(struct User u)
 {
+  if (!doesUserHaveAccounts(u)) {
+    system("clear");
+    printf("\n\t\tNo accounts found for %s. Returning to main menu.\n", u.name);
+    stayOrReturn(1, checkAllAccounts, u);
+    return;
+  }
+  
     char userName[100];
     struct Record r;
 
