@@ -124,10 +124,13 @@ void createNewAcc(struct User u)
 {
     struct Record r;
     struct Record cr;
-    char userName[50];
+    char userName[MAX_USERNAME_SIZE];
     FILE *pf = fopen(RECORDS, "a+");
+    FILE *rf = fopen(RECORDS, "r");
 
-noAccount:
+    fclose(rf);
+
+do{
     system("clear");
     printf("\t\t\t===== New record =====\n");
 
@@ -135,13 +138,17 @@ noAccount:
     scanf("%d/%d/%d", &r.deposit.month, &r.deposit.day, &r.deposit.year);
     printf("\nEnter the account number:");
     scanf("%d", &r.accountNbr);
+     int accountExists = 0;
+
+    rewind(pf);
 
     while (getAccountFromFile(pf, userName, &cr))
     {
         if (strcmp(userName, u.name) == 0 && cr.accountNbr == r.accountNbr)
         {
-            printf("✖ This Account already exists for this user\n\n");
-            goto noAccount;
+            printf("\n\t✖ This Account already exists for this user\n\n");
+           int accountExists = 1;
+           break;
         }
     }
     printf("\nEnter the country:");
