@@ -151,19 +151,37 @@ do{
            break;
         }
     }
-    printf("\nEnter the country:");
-    scanf("%s", r.country);
-    printf("\nEnter the phone number:");
-    scanf("%d", &r.phone);
-    printf("\nEnter amount to deposit: $");
-    scanf("%lf", &r.amount);
-    printf("\nChoose the type of account:\n\t-> saving\n\t-> current\n\t-> fixed01(for 1 year)\n\t-> fixed02(for 2 years)\n\t-> fixed03(for 3 years)\n\n\tEnter your choice:");
-    scanf("%s", r.accountType);
+     if (accountExists) {
+      fclose(pf);
+      stayOrReturn(0, createNewAccount, u);
+    } else {
+      r.id = lastRecordId + 1;
+      u.id = getUserId(u.name);
+      printf("\n\t\tEnter the country: ");
+      scanf("%s", r.country);
 
-    saveAccountToFile(pf, u, r);
+      printf("\n\t\tEnter the phone number: ");
+      scanf("%d", &r.phone);
 
-    fclose(pf);
-    success(u);
+      printf("\n\t\tEnter amount to deposit: $");
+      scanf("%lf", &r.amount);
+
+      printf("\n\t\tChoose the type of account:\n\n\t\t -> savings\n\t\t -> "
+             "current\n\t\t -> fixed01(for 1 year)\n\t\t -> fixed02(for 2 "
+             "years)\n\t\t -> "
+             "fixed03(for 3 "
+             "years)\n\n\t\tEnter your choice: ");
+      scanf("%s", r.accountType);
+
+      saveAccountToFile(pf, u, r);
+
+      fclose(pf);
+      printf("\n\t\t✔ Success!\n");
+      success(u);
+      break;
+    }
+  } while (1);
+
 }
 
 //check accounts
