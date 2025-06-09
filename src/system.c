@@ -242,6 +242,7 @@ void checkAllAccounts(struct User u)
     {
         if (strcmp(userName, u.name) == 0)
         {
+          accountsFound =1;
             printf("_____________________\n");
             printf("\nAccount number:%d\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%d \nAmount deposited: $%.2f \nType Of Account:%s\n",
                    r.accountNbr,
@@ -255,5 +256,10 @@ void checkAllAccounts(struct User u)
         }
     }
     fclose(pf);
+     if (accountsFound == 0) {
+    printf("\t\tNo accounts found for %s.\n", u.name);
+    stayOrReturn(1, checkAllAccounts, u);
+    return;
+  }
     success(u);
 }
