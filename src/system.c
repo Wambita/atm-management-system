@@ -77,8 +77,8 @@ void stayOrReturn(int notGood, void f(struct User u), struct User u)
 }
 
 
-// get user id 
-int getUserId(const char *username) {
+// Looks up a user ID from the users file based on usernameint 
+getUserId(const char *username) {
   FILE *fp = fopen("./data/users.txt", "r");
   if (!fp) {
     perror("\n\t\tError opening file");
@@ -116,7 +116,7 @@ int doesUserHaveAccounts(struct User u) {
   fclose(pf);
   return 0;
 }
-//success
+//// Success screen with options to return to menu or exit
 void success(struct User u)
 {
     int option;
@@ -148,7 +148,17 @@ void createNewAcc(struct User u)
     FILE *pf = fopen(RECORDS, "a+");
     FILE *rf = fopen(RECORDS, "r");
 
-    fclose(rf);
+   if (!rf) {
+    perror("\n\t\tError opening file");
+    exit(1);
+  }
+
+  int lastRecordId = 0;
+  while (fscanf(rf, "%d %*d %*s %*d %*s %*s %*d %*lf %*s", &r.id) != EOF) {
+    lastRecordId = r.id;
+  }
+
+  fclose(rf);
 
 do{
     system("clear");
@@ -173,7 +183,7 @@ do{
     }
      if (accountExists) {
       fclose(pf);
-      stayOrReturn(0, createNewAccount, u);
+      stayOrReturn(0, createNewAcc, u);
     } else {
       r.id = lastRecordId + 1;
       u.id = getUserId(u.name);
