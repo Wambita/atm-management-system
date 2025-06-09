@@ -76,6 +76,27 @@ void stayOrReturn(int notGood, void f(struct User u), struct User u)
   } while (option < 0 || option > 2);
 }
 
+
+// get user id 
+int getUserId(const char *username) {
+  FILE *fp = fopen("./data/users.txt", "r");
+  if (!fp) {
+    perror("\n\t\tError opening file");
+    exit(1);
+  }
+
+  char id[MAX_ID_SIZE], name[MAX_USERNAME_SIZE], pass[MAX_PASSWORD_SIZE];
+  while (fscanf(fp, "%s %s %s", id, name, pass) != EOF) {
+    if (strcmp(name, username) == 0) {
+      fclose(fp);
+      return atoi(id);
+    }
+  }
+
+  fclose(fp);
+  return -1;
+} 
+
 void success(struct User u)
 {
     int option;
@@ -98,6 +119,7 @@ void success(struct User u)
     }
 }
 
+//create new account
 void createNewAcc(struct User u)
 {
     struct Record r;
@@ -137,6 +159,7 @@ noAccount:
     success(u);
 }
 
+//check accounts
 void checkAllAccounts(struct User u)
 {
     char userName[100];
