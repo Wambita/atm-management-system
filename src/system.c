@@ -626,6 +626,25 @@ void removeAccount(struct User u){
     }
   }
   fclose(pf);
+  
+   if (!found) {
+    printf("\n\t\tNo account found with account number %d.\n", accountNbr);
+    stayOrReturn(0, removeAccount, u); 
+    return;
+  }
+
+  // Remove the account from the in-memory array by shifting elements
+  for (int i = 0; i < recordCount; i++) {
+    if (records[i].accountNbr == accountNbr &&
+        strcmp(records[i].name, u.name) == 0) {
+      for (int j = i; j < recordCount - 1; j++) {
+        records[j] = records[j + 1];
+      }
+      recordCount--;
+      printf("\n\t\tAccount %d removed from memory. File rewrite pending.\n", accountNbr);
+      break;
+    }
+  }
 
   printf("\n\t\tAccount number %d \n", accountNbr);
   success(u); 
