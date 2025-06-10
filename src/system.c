@@ -553,7 +553,7 @@ void makeTransaction(struct User u) {
         strcmp(records[i].name, u.name) == 0) {
       if (strcmp(transactionType, "withdraw") == 0) {
         if (records[i].amount < amount) {
-          printf("\n\t\t✖ Not enough balance for withdrawal.\n");
+          printf("\n\t\t Not enough balance for withdrawal.\n");
           stayOrReturn(0, makeTransaction, u); // Return on insufficient funds
           return;
         }
@@ -571,8 +571,19 @@ void makeTransaction(struct User u) {
     }
   }
 
+  // Re-open to save changes Write all records (with updated balance for the transacted account) back to file
+  pf = fopen(RECORDS, "w");
+  if (pf == NULL) {
+    perror("\n\t\tFailed to open file");
+    return;
+  }
+  for (int i = 0; i < recordCount; i++) {
+    updateUserAccountInFile(pf, records[i]);
+  }
+  fclose(pf);
+  printf("\n\t\t✔ Transaction successful.\n");
 
-  success(u); // Temporary return
+  success(u);
 }
 //transfer ownership
 //remove accounts
