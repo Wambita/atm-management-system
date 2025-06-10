@@ -678,6 +678,8 @@ void transferOwnership(struct User u){
   struct Record records[MAX_RECORDS]; 
   int recordCount = 0; 
   int found = 0;
+  char newUserName[MAX_USERNAME_SIZE];
+  int newUserId;
 
 
   system("clear");
@@ -707,6 +709,22 @@ void transferOwnership(struct User u){
     }
   }
   fclose(pf);
+
+   if (!found) {
+    printf("\n\t\tNo account found with account number %d or it does not belong to you.\n", accountNbr);
+    stayOrReturn(0, transferOwnership, u); 
+    return;
+  }
+
+  // Prompt for new owner's username and validate it
+  printf("\n\t\tEnter the username of the new owner: ");
+  scanf("%s", newUserName);
+  newUserId = getUserId(newUserName); 
+  if (newUserId == -1) {
+    printf("\n\t\tNew owner '%s' not found in the system.\n", newUserName);
+    stayOrReturn(0, transferOwnership, u);
+    return;
+  }
 
   printf("\n\t\tAccount number %d\n", accountNbr);
   success(u); 
