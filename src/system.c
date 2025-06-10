@@ -405,17 +405,26 @@ void checkAccountDetails(struct User u) {
   while (getAccountFromFile(pf, userName, &r)) {
     // Check if account number matches AND it belongs to the current user
     if (r.accountNbr == accountNbr && strcmp(userName, u.name) == 0) {
-      found = 1; // Account found
-      break;     // Exit loop once found
+      found = 1;
+      break;     
     }
   }
   fclose(pf);
 
-  // test
-  if (found) {
-    printf("\n\t\tAccount %d found for %s. Details to be displayed next.\n", accountNbr, u.name);
-  } else {
+  if (!found) {
     printf("\n\t\tNo account found with account number %d.\n", accountNbr);
+    stayOrReturn(0, checkAccountDetails, u); // Option to retry or return
+    return;
   }
+
+ // Display the found account's details
+  printf("\n\t\tAccount number: %d\n\t\tDeposit date: %d/%d/%d\n\t\tCountry: "
+         "%s \n\t\tPhone number: %d \n\t\tAmount deposited: $%.2f \n\t\tType "
+         "of account: %s\n",
+         r.accountNbr, r.deposit.day, r.deposit.month, r.deposit.year,
+         r.country, r.phone, r.amount, r.accountType);
+
+  // test
+    printf("\n\t\tAccount %d found. Displaying details pending.\n", accountNbr);
   success(u);
 }
