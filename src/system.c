@@ -275,6 +275,7 @@ void updateAccountInformation(struct User u) {
   }
 
   int accountNbr, choice;
+  int newPhoneNumber;
   int found = 0;
 
   system("clear");
@@ -322,7 +323,17 @@ if(!found) {
   // Handle user's choice with a switch statement
   switch (choice) {
   case 1:
-    printf("\n\t\t update phone number\n");
+    printf("\n\t\t Enter new phone number: ");
+    scanf("%d", &newPhoneNumber);
+    //loop through records to find and update phone num
+     for (int i = 0; i < recordCount; i++) {
+      if (records[i].accountNbr == accountNbr &&
+          strcmp(records[i].name, u.name) == 0) {
+        records[i].phone = newPhoneNumber;
+        printf("\n\t\tPhone number updated.\n");
+        break;
+      }
+    }
     break;
   case 2:
     printf("\n\t\t update country");
