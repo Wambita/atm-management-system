@@ -675,11 +675,38 @@ void transferOwnership(struct User u){
   }
 
   int accountNbr;
+  struct Record records[MAX_RECORDS]; 
+  int recordCount = 0; 
+  int found = 0;
+
 
   system("clear");
   printf("\t\t====== Transfer Ownership for %s =====\n\n", u.name);
   printf("\n\t\tEnter the account number you want to transfer: ");
   scanf("%d", &accountNbr);
+
+   // Open the records file for reading
+  FILE *pf = fopen(RECORDS, "r");
+  if (pf == NULL) {
+    perror("\n\t\tFailed to open file");
+    return;
+  }
+
+  // Read all accounts into memory and check for the target account
+  while (getAccountFromFile(pf, records[recordCount].name,
+                            &records[recordCount])) {
+    if (records[recordCount].accountNbr == accountNbr &&
+        strcmp(records[recordCount].name, u.name) == 0) {
+      found = 1; 
+    }
+    recordCount++;
+    //safeguard against buffer overflow
+    if (recordCount >= MAX_RECORDS) {
+        printf("\n\t\tWarning: Maximum records reached. Some accounts might not be loaded.\n");
+        break;
+    }
+  }
+  fclose(pf);
 
   printf("\n\t\tAccount number %d\n", accountNbr);
   success(u); 
