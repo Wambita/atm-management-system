@@ -665,3 +665,22 @@ void removeAccount(struct User u){
 }
 
 //transfer ownership
+void transferOwnership(struct User u){
+   // Check if the user has any accounts
+  if (!doesUserHaveAccounts(u)) {
+    system("clear");
+    printf("\n\t\tNo accounts found for %s. Returning to main menu.\n", u.name);
+    stayOrReturn(1, transferOwnership, u);
+    return;
+  }
+
+  int accountNbr;
+
+  system("clear");
+  printf("\t\t====== Transfer Ownership for %s =====\n\n", u.name);
+  printf("\n\t\tEnter the account number you want to transfer: ");
+  scanf("%d", &accountNbr);
+
+  printf("\n\t\tAccount number %d\n", accountNbr);
+  success(u); 
+}
