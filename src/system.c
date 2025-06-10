@@ -263,3 +263,20 @@ void checkAllAccounts(struct User u)
   }
     success(u);
 }
+
+//update user account information (name and country)
+void updateAccountInformation(struct User u) {
+  if (!doesUserHaveAccounts(u)) {
+  system("clear");
+  printf("\n\t\tNo accounts found for %s. Returning to main menu.\n", u.name);
+  stayOrReturn(1, updateAccountInformation, u);
+  return;
+}
+
+int accountNbr;
+system("clear");
+
+printf("\t\t====== Update accounts for %s =====\n\n", u.name);
+printf("\n\t\tEnter the account number you wish to update: ");
+scanf("%d", &accountNbr);
+}
