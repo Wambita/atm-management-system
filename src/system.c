@@ -606,7 +606,27 @@ void removeAccount(struct User u){
   printf("\n\t\tEnter the account number you wish to remove: ");
   scanf("%d", &accountNbr);
 
-  // Placeholder for file reading logic
+  // Open the records file for reading
+ FILE *pf = fopen(RECORDS, "r");
+  if (pf == NULL) {
+    perror("\n\t\tFailed to open file");
+    exit(1); 
+  }
+
+  while (getAccountFromFile(pf, records[recordCount].name,
+                            &records[recordCount])) {
+    if (records[recordCount].accountNbr == accountNbr &&
+        strcmp(records[recordCount].name, u.name) == 0) {
+      found = 1;
+    }
+    recordCount++;
+    if (recordCount >= MAX_RECORDS) {
+        printf("\n\t\tWarning: Maximum records loaded. Some accounts might be missed.\n");
+        break;
+    }
+  }
+  fclose(pf);
+
   printf("\n\t\tAccount number %d \n", accountNbr);
   success(u); 
 }
