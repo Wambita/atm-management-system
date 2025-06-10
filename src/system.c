@@ -490,15 +490,12 @@ void makeTransaction(struct User u) {
   system("clear");
   printf("\t\t====== Make Transaction for %s =====\n\n", u.name);
 
-  // Prompt for the account number
   printf("\n\t\tEnter the account number for the transaction: ");
   scanf("%d", &accountNbr);
 
-  // Prepare to read all records from the file
   struct Record records[MAX_RECORDS];
   int recordCount = 0;
 
-  // Open the records file for reading
   FILE *pf = fopen(RECORDS, "r");
   if (pf == NULL) {
     perror("\n\t\tFailed to open file");
@@ -510,16 +507,40 @@ void makeTransaction(struct User u) {
                             &records[recordCount])) {
     if (records[recordCount].accountNbr == accountNbr &&
         strcmp(records[recordCount].name, u.name) == 0) {
-      found = 1; // Mark as found
+      found = 1; 
     }
     recordCount++;
-    // Basic safeguard against buffer overflow
+    //safeguard against buffer overflow
     if (recordCount >= MAX_RECORDS) {
         printf("\n\t\tWarning: Maximum records reached. Some accounts might not be loaded.\n");
         break;
     }
   }
   fclose(pf);
+  if (!found) {
+    printf("\n\t\t No account found with account number %d.\n", accountNbr);
+    stayOrReturn(0, makeTransaction, u);
+    return;
+  }
+
+  // Define restricted account types and check against the found account
+  char *restrictedAccountTypes[] = {"fixed01", "fixed02", "fixed03"};
+  for (int i = 0; i < recordCount; i++) {
+    if (records[i].accountNbr == accountNbr &&
+        strcmp(records[i].name, u.name) == 0) { 
+
+      for (int j = 0; j < 3; ++j) {
+        if (strcmp(records[i].accountType, restrictedAccountTypes[j]) == 0) {
+          printf("\n\t\t✖ Accounts of type %s are not allowed to make "
+                 "transactions.\n",
+                 records[i].accountType);
+          stayOrReturn(0, makeTransaction, u);
+          return;
+        }
+      }
+      break; 
+    }
+  }
 
   success(u); // Temporary return
 }
