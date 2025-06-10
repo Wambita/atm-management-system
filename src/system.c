@@ -373,3 +373,21 @@ fclose(pf);
 printf("\n\t\t Account information updated successfully");
 success(u);
 }
+
+//check account details and rates
+void checkAccountDetails(struct User u) {
+  //check if user has any accounts
+  if(!doesUserHaveAccounts(u)) {
+    system("clear");
+    printf("\n\t\tNo accounts found for %s. Returning to main menu.\n", u.name);
+    stayOrReturn(1, checkAccountDetails, u);
+    return;
+  }
+
+  int accountNbr;
+  struct Record r;
+  char userName[MAX_USERNAME_SIZE];
+  int found =0;
+
+  success(u);
+}
