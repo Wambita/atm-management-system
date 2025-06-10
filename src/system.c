@@ -275,6 +275,7 @@ void updateAccountInformation(struct User u) {
   }
 
   int accountNbr;
+  int found = 0;
 
   system("clear");
 
@@ -285,15 +286,19 @@ void updateAccountInformation(struct User u) {
  
   struct Record records[MAX_RECORDS];
   int recordCount = 0;
+
   FILE *pf = fopen(RECORDS, "r");
   if (pf == NULL) {
     perror("\n\t\tFailed to open file");
     return;
   }
 
-  // Read all accounts into the array
+  // Read all accounts into the array and check if  the account number belongs to the user
   while (getAccountFromFile(pf, records[recordCount].name,
                             &records[recordCount])) {
+    if (records[recordCount].accountNbr == accountNbr && strcmp(records[recordCount].name, u.name) == 0){
+      found =  1;
+    }
     recordCount++;
     if (recordCount >= MAX_RECORDS) {
         printf("\n\t\tWarning: Maximum records reached. Some accounts might not be loaded.\n");
@@ -302,7 +307,12 @@ void updateAccountInformation(struct User u) {
   }
   fclose(pf);
 
+//No matching account is found
+if(!found) {
+  printf("\n\t\t No account  found with  account number %d for user %s. \n", accountNbr, u.name);
+  stayOrReturn(0, updateAccountInformation, u);
+}
  
-  printf("\n\t\tAccount number %d entered.\n", accountNbr);
+  printf("\n\t\tAccount %d found for %s . \n", accountNbr,u.name);
   mainMenu(u);
 }
