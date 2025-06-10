@@ -463,7 +463,9 @@ void checkAccountDetails(struct User u) {
  
   }
   else {
-      printf("\n\t\t invalid account.\n");
+    printf("\n\t\tInvalid account type.\n");
+    stayOrReturn(0, checkAccountDetails, u);
+    return;
   }
 
 
