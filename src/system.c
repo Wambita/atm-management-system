@@ -276,6 +276,7 @@ void updateAccountInformation(struct User u) {
 
   int accountNbr, choice;
   int newPhoneNumber;
+  char newcountry[MAX_COUNTRY_SIZE];
   int found = 0;
 
   system("clear");
@@ -336,7 +337,17 @@ if(!found) {
     }
     break;
   case 2:
-    printf("\n\t\t update country");
+     printf("\n\t\tEnter new country: ");
+    scanf("%s", newCountry);
+    // Loop through records to find and update the country
+    for (int i = 0; i < recordCount; i++) {
+      if (records[i].accountNbr == accountNbr &&
+          strcmp(records[i].name, u.name) == 0) {
+        strcpy(records[i].country, newCountry);
+        printf("\n\t\tCountry updated in memory.\n");
+        break;
+      }
+    }
     break;
   default:
     printf("\n\t\tInvalid choice. Returning to main menu.\n");
