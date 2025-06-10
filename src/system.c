@@ -437,17 +437,32 @@ void checkAccountDetails(struct User u) {
   else if (strcmp(r.accountType, "fixed01") == 0) {
     rate = 0.04;
     double interest = r.amount * (1 + rate / 12) - r.amount;
-    interest *= 12; // Total interest for 12 months
+    interest *= 12; 
     printf("\n\t\tYou will get $%.2f as interest on %d/%d/%d.\n", interest,
            r.deposit.month, r.deposit.day, r.deposit.year + 1);
   }
-  // Other account types are not handled yet
+   // Calculate and display interest for 2-year fixed accounts
+  else if (strcmp(r.accountType, "fixed02") == 0) {
+    rate = 0.05;
+    double interest = r.amount * (1 + rate / 12) - r.amount;
+    interest *= 24; 
+    printf("\n\t\tYou will get $%.2f as interest on %d/%d/%d.\n", interest,
+           r.deposit.month, r.deposit.day, r.deposit.year + 2);
+  }
+  // Calculate and display interest for 3-year fixed accounts
+  else if (strcmp(r.accountType, "fixed03") == 0) {
+    rate = 0.08;
+    double interest = r.amount * (1 + rate / 12) - r.amount;
+    interest *= 36;
+    printf("\n\t\tYou will get $%.2f as interest on %d/%d/%d.\n", interest,
+           r.deposit.month, r.deposit.day, r.deposit.year + 3);
+  }
+ 
   else {
-      printf("\n\t\t continue");
+      printf("\n\t\tcurrent");
   }
 
-  success(u);
-  // test
-  printf("\n\t\tAccount %d found. Displaying details pending.\n", accountNbr);
+
+
   success(u);
 }
