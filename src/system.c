@@ -274,7 +274,7 @@ void updateAccountInformation(struct User u) {
     return;
   }
 
-  int accountNbr;
+  int accountNbr, choice;
   int found = 0;
 
   system("clear");
@@ -313,6 +313,27 @@ if(!found) {
   stayOrReturn(0, updateAccountInformation, u);
 }
  
-  printf("\n\t\tAccount %d found for %s . \n", accountNbr,u.name);
-  mainMenu(u);
+
+//prompt user to  select field to update
+ printf("\n\t\tWhich field do you want to update?\n\n\t\t 1. Phone "
+         "number\n\n\t\t 2. Country\n\n\t\tEnter choice (1/2): ");
+  scanf("%d", &choice);
+
+  // Handle user's choice with a switch statement
+  switch (choice) {
+  case 1:
+    printf("\n\t\t update phone number\n");
+    break;
+  case 2:
+    printf("\n\t\t update country");
+    break;
+  default:
+    printf("\n\t\tInvalid choice. Returning to main menu.\n");
+    mainMenu(u);
+    return;
+  }
+
+
+printf("\n\t\tAccount %d found for %s . \n", accountNbr,u.name);
+mainMenu(u);
 }
