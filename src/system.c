@@ -494,8 +494,33 @@ void makeTransaction(struct User u) {
   printf("\n\t\tEnter the account number for the transaction: ");
   scanf("%d", &accountNbr);
 
-  // Placeholder for file reading and transaction logic
-  printf("\n\t\tAccount number %d entered. Transaction logic pending.\n", accountNbr);
+  // Prepare to read all records from the file
+  struct Record records[MAX_RECORDS];
+  int recordCount = 0;
+
+  // Open the records file for reading
+  FILE *pf = fopen(RECORDS, "r");
+  if (pf == NULL) {
+    perror("\n\t\tFailed to open file");
+    return;
+  }
+
+  // Read accounts and check if the entered account exists for this user
+  while (getAccountFromFile(pf, records[recordCount].name,
+                            &records[recordCount])) {
+    if (records[recordCount].accountNbr == accountNbr &&
+        strcmp(records[recordCount].name, u.name) == 0) {
+      found = 1; // Mark as found
+    }
+    recordCount++;
+    // Basic safeguard against buffer overflow
+    if (recordCount >= MAX_RECORDS) {
+        printf("\n\t\tWarning: Maximum records reached. Some accounts might not be loaded.\n");
+        break;
+    }
+  }
+  fclose(pf);
+
   success(u); // Temporary return
 }
 //transfer ownership
