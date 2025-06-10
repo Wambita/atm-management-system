@@ -401,8 +401,21 @@ void checkAccountDetails(struct User u) {
     return;
   }
 
-  // File opened successfully, but no reading/searching logic yet
-  printf("\n\t\tFile '%s' opened. \n", RECORDS);
-  fclose(pf); 
+  // Read accounts from file and check for a match
+  while (getAccountFromFile(pf, userName, &r)) {
+    // Check if account number matches AND it belongs to the current user
+    if (r.accountNbr == accountNbr && strcmp(userName, u.name) == 0) {
+      found = 1; // Account found
+      break;     // Exit loop once found
+    }
+  }
+  fclose(pf);
+
+  // test
+  if (found) {
+    printf("\n\t\tAccount %d found for %s. Details to be displayed next.\n", accountNbr, u.name);
+  } else {
+    printf("\n\t\tNo account found with account number %d.\n", accountNbr);
+  }
   success(u);
 }
