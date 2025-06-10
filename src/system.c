@@ -585,5 +585,30 @@ void makeTransaction(struct User u) {
 
   success(u);
 }
-//transfer ownership
+
 //remove accounts
+void removeAccount(struct User u){
+   // Check if the user has any accounts
+  if (!doesUserHaveAccounts(u)) {
+    system("clear");
+    printf("\n\t\tNo accounts found for %s. Returning to main menu.\n", u.name);
+    stayOrReturn(1, removeAccount, u);
+    return;
+  }
+
+  int accountNbr;
+  struct Record records[MAX_RECORDS];
+  int recordCount = 0; 
+  int found = 0; 
+
+  system("clear");
+  printf("\t\t====== Remove Account for %s =====\n\n", u.name);
+  printf("\n\t\tEnter the account number you wish to remove: ");
+  scanf("%d", &accountNbr);
+
+  // Placeholder for file reading logic
+  printf("\n\t\tAccount number %d \n", accountNbr);
+  success(u); 
+}
+
+//transfer ownership
