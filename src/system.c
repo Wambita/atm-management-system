@@ -279,4 +279,30 @@ system("clear");
 printf("\t\t====== Update accounts for %s =====\n\n", u.name);
 printf("\n\t\tEnter the account number you wish to update: ");
 scanf("%d", &accountNbr);
+struct Record records[MAX_RECORDS];
+int recordCount = 0;
+int found = 0;
+
+FILE *pf = fopen(RECORDS, "r");
+if (pf == NULL) {
+  perror("\n\t\tFailed to open file");
+  return;
+}
+
+while (getAccountFromFile(pf, records[recordCount].name,
+                          &records[recordCount])) {
+  if (records[recordCount].accountNbr == accountNbr &&
+      strcmp(records[recordCount].name, u.name) == 0) {
+    found = 1;
+  }
+  recordCount++;
+}
+fclose(pf);
+
+if (!found) {
+  printf("\n\t\tNo account found with account number %d.\n", accountNbr);
+  stayOrReturn(0, updateAccountInformation, u);
+  return;
+}
+
 }
