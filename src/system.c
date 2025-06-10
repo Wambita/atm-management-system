@@ -626,7 +626,7 @@ void removeAccount(struct User u){
     }
   }
   fclose(pf);
-  
+
    if (!found) {
     printf("\n\t\tNo account found with account number %d.\n", accountNbr);
     stayOrReturn(0, removeAccount, u); 
@@ -646,7 +646,21 @@ void removeAccount(struct User u){
     }
   }
 
-  printf("\n\t\tAccount number %d \n", accountNbr);
+ // Re-open the file in write mode, which truncates it
+  pf = fopen(RECORDS, "w");
+  if (pf == NULL) {
+    perror("\n\t\tFailed to open file");
+    exit(1);
+  }
+
+  int newId = 0; 
+  for (int i = 0; i < recordCount; i++) {
+    records[i].id = newId++; // Re-assign sequential IDs
+    updateUserAccountInFile(pf, records[i]);
+  }
+  fclose(pf); 
+
+  printf("\n\t\tAccount removed successfully");
   success(u); 
 }
 
