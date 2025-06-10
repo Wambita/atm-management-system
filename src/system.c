@@ -726,6 +726,30 @@ void transferOwnership(struct User u){
     return;
   }
 
-  printf("\n\t\tAccount number %d\n", accountNbr);
+    // Find the target account and update its ownership details in memory
+  for (int i = 0; i < recordCount; i++) {
+    if (records[i].accountNbr == accountNbr &&
+        strcmp(records[i].name, u.name) == 0) {
+      records[i].userId = newUserId;         
+      strcpy(records[i].name, newUserName);  
+      strcpy(records[i].country, "N/A");     
+      records[i].phone = 0;                
+      printf("\n\t\tAccount %d updated in memory. New owner: %s.\n", accountNbr, newUserName);
+      break;
+    }
+  }
+
+//Re-open the file in write mode to truncate and rewrite all records
+  pf = fopen(RECORDS, "w");
+  if (pf == NULL) {
+    perror("\n\t\tFailed to open file for writing");
+    return;
+  }
+   for (int i = 0; i < recordCount; i++) {
+    updateUserAccountInFile(pf, records[i]);
+  }
+  fclose(pf);
+
+  printf("\n\t\tOwnership successfully transferred.\n");
   success(u); 
 }
