@@ -10,6 +10,7 @@
 
 const char *RECORDS = "./data/records.txt";
 
+//get account from file function
 int getAccountFromFile(FILE *ptr, char name[MAX_USERNAME_SIZE], struct Record *r)
 {
     return fscanf(ptr, "%d %d %s %d %d/%d/%d %s %d %lf %s",
@@ -467,7 +468,35 @@ void checkAccountDetails(struct User u) {
     stayOrReturn(0, checkAccountDetails, u);
     return;
   }
-
-
   success(u);
 }
+
+//transactions
+void makeTransaction(struct User u) {
+  // Check if the user has any accounts
+  if (!doesUserHaveAccounts(u)) {
+    system("clear");
+    printf("\n\t\tNo accounts found for %s. Returning to main menu.\n", u.name);
+    stayOrReturn(1, makeTransaction, u);
+    return;
+  }
+
+  int accountNbr;
+  double amount; 
+  char transactionType[MAX_TRANSACTION_TYPE_SIZE]; 
+
+  int found = 0; 
+
+  system("clear");
+  printf("\t\t====== Make Transaction for %s =====\n\n", u.name);
+
+  // Prompt for the account number
+  printf("\n\t\tEnter the account number for the transaction: ");
+  scanf("%d", &accountNbr);
+
+  // Placeholder for file reading and transaction logic
+  printf("\n\t\tAccount number %d entered. Transaction logic pending.\n", accountNbr);
+  success(u); // Temporary return
+}
+//transfer ownership
+//remove accounts
