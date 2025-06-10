@@ -457,11 +457,14 @@ void checkAccountDetails(struct User u) {
     printf("\n\t\tYou will get $%.2f as interest on %d/%d/%d.\n", interest,
            r.deposit.month, r.deposit.day, r.deposit.year + 3);
   }
+  else if (strcmp(r.accountType, "current") == 0) {
+    printf("\n\t\tYou will not get interests because the account is of type "
+           "current\n");
  
-  else {
-      printf("\n\t\tcurrent");
   }
-
+  else {
+      printf("\n\t\t invalid account.\n");
+  }
 
 
   success(u);
