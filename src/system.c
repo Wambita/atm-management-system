@@ -389,5 +389,20 @@ void checkAccountDetails(struct User u) {
   char userName[MAX_USERNAME_SIZE];
   int found =0;
 
+  system("clear");
+  printf("\t\t====== Check Account Details for %s =====\n\n", u.name);
+  printf("\n\t\tEnter the account number you wish to check: ");
+  scanf("%d", &accountNbr);
+
+  // Open the records file for reading
+  FILE *pf = fopen(RECORDS, "r");
+  if (pf == NULL) {
+    perror("\n\t\tFailed to open file"); // Report error if file opening fails
+    return;
+  }
+
+  // File opened successfully, but no reading/searching logic yet
+  printf("\n\t\tFile '%s' opened. \n", RECORDS);
+  fclose(pf); 
   success(u);
 }
