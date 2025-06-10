@@ -276,7 +276,7 @@ void updateAccountInformation(struct User u) {
 
   int accountNbr, choice;
   int newPhoneNumber;
-  char newcountry[MAX_COUNTRY_SIZE];
+  char newCountry[MAX_COUNTRY_SIZE];
   int found = 0;
 
   system("clear");
@@ -356,6 +356,20 @@ if(!found) {
   }
 
 
-printf("\n\t\tAccount %d found for %s . \n", accountNbr,u.name);
-mainMenu(u);
+//reopen file in write mode to save records
+pf = fopen(RECORDS, "w");
+if (pf == NULL) {
+  perror("\n\t\t Failed to open the file for writing");
+  return;
+}
+
+//write all records  to file
+for (int i = 0; i < recordCount; i++)
+{
+  updateUserAccountInFile(pf, records[i]);
+}
+fclose(pf);
+
+printf("\n\t\t Account information updated successfully");
+success(u);
 }
