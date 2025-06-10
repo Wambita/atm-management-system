@@ -542,6 +542,36 @@ void makeTransaction(struct User u) {
     }
   }
 
+//transactin logic (withdraw and deposit)
+  printf("\n\t\tEnter the transaction type (deposit/withdraw): ");
+  scanf("%s", transactionType);
+
+  printf("\n\t\tEnter the amount: ");
+  scanf("%lf", &amount);
+   for (int i = 0; i < recordCount; i++) {
+    if (records[i].accountNbr == accountNbr &&
+        strcmp(records[i].name, u.name) == 0) {
+      if (strcmp(transactionType, "withdraw") == 0) {
+        if (records[i].amount < amount) {
+          printf("\n\t\t✖ Not enough balance for withdrawal.\n");
+          stayOrReturn(0, makeTransaction, u); // Return on insufficient funds
+          return;
+        }
+        records[i].amount -= amount;
+        printf("\n\t\tWithdrawal processed in memory. New balance: $%.2f.\n", records[i].amount);
+      } else if (strcmp(transactionType, "deposit") == 0) {
+        records[i].amount += amount;
+        printf("\n\t\tDeposit processed in memory. New balance: $%.2f.\n", records[i].amount);
+      } else {
+        printf("\n\t\t Invalid transaction type.\n");
+        stayOrReturn(0, makeTransaction, u); 
+        return;
+      }
+      break; 
+    }
+  }
+
+
   success(u); // Temporary return
 }
 //transfer ownership
